@@ -1,0 +1,13 @@
+[package]
+name = "ethereum-jsonrpc"
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+authors = ["Artem Vorotnikov <artem@vorotnikov.me>"]
+
+[dependencies]
+ethereum-types = "0.12"
+jsonrpsee = { git = "https://github.com/paritytech/jsonrpsee", features = [
+    "full",
+] }
+serde = "1"
