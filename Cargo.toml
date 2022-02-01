@@ -3,11 +3,16 @@ name = "ethereum-jsonrpc"
 version = "0.1.0"
 edition = "2021"
 license = "Apache-2.0"
-authors = ["Artem Vorotnikov <artem@vorotnikov.me>"]
 
 [dependencies]
 ethereum-types = "0.12"
+ethnum = { git = "https://github.com/vorot93/ethnum-rs", branch = "staging", default-features = false, features = [
+    "serde",
+] }
 jsonrpsee = { git = "https://github.com/paritytech/jsonrpsee", features = [
     "full",
 ] }
-serde = "1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+bytes = "1"
+hex = "0.4"
