@@ -6,15 +6,16 @@ pub trait EthApi {
     #[method(name = "blockNumber")]
     async fn block_number(&self) -> RpcResult<BlockNumber>;
     #[method(name = "call")]
-    async fn call(&self, call_data: CallData, block_number: BlockNumber) -> RpcResult<ReturnData>;
+    async fn call(&self, call_data: CallData, block_number: DefaultBlock) -> RpcResult<ReturnData>;
     #[method(name = "estimateGas")]
     async fn estimate_gas(
         &self,
         call_data: CallData,
-        block_number: BlockNumber,
+        block_number: Option<DefaultBlock>,
     ) -> RpcResult<EstimateGas>;
     #[method(name = "getBalance")]
-    async fn get_balance(&self, address: Address, block_number: BlockNumber) -> RpcResult<Balance>;
+    async fn get_balance(&self, address: Address, block_number: DefaultBlock)
+        -> RpcResult<Balance>;
     #[method(name = "getBlockByHash")]
     async fn get_block_by_hash(
         &self,
@@ -24,21 +25,21 @@ pub trait EthApi {
     #[method(name = "getBlockByNumber")]
     async fn get_block_by_number(
         &self,
-        block_number: BlockNumber,
+        block_number: DefaultBlock,
         full_tx_obj: bool,
     ) -> RpcResult<Option<Block>>;
     #[method(name = "getBlockTransactionCountByHash")]
     async fn get_block_tx_count_by_hash(&self, block_hash: H256) -> RpcResult<TxCount>;
     #[method(name = "getBlockTransactionCountByNumber")]
-    async fn get_block_tx_count_by_number(&self, block_number: BlockNumber) -> RpcResult<TxCount>;
+    async fn get_block_tx_count_by_number(&self, block_number: DefaultBlock) -> RpcResult<TxCount>;
     #[method(name = "getCode")]
-    async fn get_code(&self, address: Address, block_number: BlockNumber) -> RpcResult<Code>;
+    async fn get_code(&self, address: Address, block_number: DefaultBlock) -> RpcResult<Code>;
     #[method(name = "getStorageAt")]
     async fn get_storage_at(
         &self,
         address: Address,
         storage_pos: StoragePos,
-        block_number: BlockNumber,
+        block_number: DefaultBlock,
     ) -> RpcResult<StorageData>;
     #[method(name = "getTransactionByBlockHashAndIndex")]
     async fn get_tx_by_block_hash_and_index(
@@ -49,14 +50,14 @@ pub trait EthApi {
     #[method(name = "getTransactionByBlockNumberAndIndex")]
     async fn get_tx_by_block_number_and_index(
         &self,
-        block_number: BlockNumber,
+        block_number: DefaultBlock,
         index: TxIndex,
     ) -> RpcResult<Option<Tx>>;
     #[method(name = "getTransactionCount")]
     async fn get_transaction_count(
         &self,
         address: Address,
-        block_number: BlockNumber,
+        block_number: DefaultBlock,
     ) -> RpcResult<TxCount>;
     #[method(name = "getTransactionReceipt")]
     async fn get_transaction_receipt(&self, tx_hash: H256) -> RpcResult<Option<TxReceipt>>;
@@ -69,7 +70,7 @@ pub trait EthApi {
     #[method(name = "getUncleByBlockNumberAndIndex")]
     async fn get_uncle_by_block_number_and_index(
         &self,
-        block_number: BlockNumber,
+        block_number: DefaultBlock,
         index: UncleIndex,
     ) -> RpcResult<Option<Block>>;
     #[method(name = "getUncleCountByBlockHash")]
@@ -77,6 +78,6 @@ pub trait EthApi {
     #[method(name = "getUncleCountByBlockNumber")]
     async fn get_uncle_count_by_block_number(
         &self,
-        block_number: BlockNumber,
+        block_number: DefaultBlock,
     ) -> RpcResult<UncleCount>;
 }

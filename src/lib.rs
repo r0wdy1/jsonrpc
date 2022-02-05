@@ -10,8 +10,8 @@ mod prelude {
     pub use hex::*;
     pub use jsonrpsee::{core::RpcResult, proc_macros::rpc};
     pub use serde::{
-        de::{self, Error},
-        Deserialize, Serialize,
+        de::{self, EnumAccess, Error, Visitor},
+        ser, Deserialize, Serialize,
     };
     pub use serde_json::{from_str, to_string};
 }

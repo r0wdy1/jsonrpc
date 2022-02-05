@@ -12,6 +12,21 @@ pub type UncleCount = U64;
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
+pub enum Tag {
+    Earliest,
+    Latest,
+    Pending,
+}
+
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DefaultBlock {
+    Number(U64),
+    Tag(Tag),
+}
+
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct CallData {
     pub from: Option<Address>,
     pub to: Address,
@@ -213,6 +228,27 @@ mod tests {
         assert_eq!(
             serde_json::from_str::<CallData>(hexstring_with_data).unwrap(),
             call_data_with_data
+        );
+    }
+
+    #[test]
+    fn test_ser_de_default_block() {
+        let default_block_pending = DefaultBlock::Tag(Tag::Pending);
+        let json_string_pending = r#""pending""#;
+        assert_eq!(
+            serde_json::to_string(&default_block_pending).unwrap(),
+            json_string_pending
+        );
+        assert_eq!(
+            serde_json::from_str::<DefaultBlock>(json_string_pending).unwrap(),
+            default_block_pending
+        );
+        let default_block = DefaultBlock::Number(U64::from(14145663));
+        let json_string = r#""0xd7d87f""#;
+        assert_eq!(serde_json::to_string(&default_block).unwrap(), json_string);
+        assert_eq!(
+            serde_json::from_str::<DefaultBlock>(json_string).unwrap(),
+            default_block
         );
     }
 }
