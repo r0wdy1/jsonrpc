@@ -40,6 +40,8 @@ pub trait EthApi {
         storage_pos: StoragePos,
         block_number: BlockNumber,
     ) -> RpcResult<StorageData>;
+    #[method(name = "getTransaction")]
+    async fn get_transaction(&self, hash: H256) -> RpcResult<Option<Tx>>;
     #[method(name = "getTransactionByBlockHashAndIndex")]
     async fn get_tx_by_block_hash_and_index(
         &self,
