@@ -5,7 +5,7 @@ edition = "2021"
 license = "Apache-2.0"
 
 [dependencies]
-ethereum-types = "0.12"
+ethereum-types = "0.13"
 ethnum = { git = "https://github.com/vorot93/ethnum-rs", branch = "staging", default-features = false, features = [
     "serde",
 ] }
