@@ -112,24 +112,21 @@ pub struct TxReceipt {
 }
 
 #[derive(Serialize, Deserialize, Clone, Copy, PartialEq, Debug)]
-/// BlockId is either a Block Number or a Hash.
 #[serde(untagged)]
-pub enum BlockId {
-    /// A 256-bit Hash.
+pub enum BlockNumberOrHash {
     Hash(H256),
-    /// A block number.
     Number(BlockNumber),
 }
 
-impl From<BlockNumber> for BlockId {
+impl From<BlockNumber> for BlockNumberOrHash {
     fn from(n: BlockNumber) -> Self {
-        BlockId::Number(n)
+        BlockNumberOrHash::Number(n)
     }
 }
 
-impl From<H256> for BlockId {
+impl From<H256> for BlockNumberOrHash {
     fn from(hash: H256) -> Self {
-        BlockId::Hash(hash)
+        BlockNumberOrHash::Hash(hash)
     }
 }
 
