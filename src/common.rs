@@ -111,6 +111,28 @@ pub struct TxReceipt {
     pub status: U64,
 }
 
+#[derive(Serialize, Deserialize, Clone, Copy, PartialEq, Debug)]
+/// BlockId is either a Block Number or a Hash.
+#[serde(untagged)]
+pub enum BlockId {
+    /// A 256-bit Hash.
+    Hash(H256),
+    /// A block number.
+    Number(BlockNumber),
+}
+
+impl From<BlockNumber> for BlockId {
+    fn from(n: BlockNumber) -> Self {
+        BlockId::Number(n)
+    }
+}
+
+impl From<H256> for BlockId {
+    fn from(hash: H256) -> Self {
+        BlockId::Hash(hash)
+    }
+}
+
 pub mod hexbytes {
     use serde::Serializer;
 
