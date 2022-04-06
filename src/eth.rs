@@ -5,6 +5,8 @@ use crate::types::*;
 pub trait EthApi {
     #[method(name = "blockNumber")]
     async fn block_number(&self) -> RpcResult<U64>;
+    #[method(name = "chainId")]
+    async fn chain_id(&self) -> RpcResult<U64>;
     #[method(name = "call")]
     async fn call(&self, call_data: MessageCall, block_number: BlockNumber) -> RpcResult<Bytes>;
     #[method(name = "estimateGas")]
@@ -43,8 +45,8 @@ pub trait EthApi {
         storage_pos: U256,
         block_number: BlockNumber,
     ) -> RpcResult<U256>; // Storage data is nothing more than 32-bytes
-    #[method(name = "getTransaction")]
-    async fn get_transaction(&self, hash: H256) -> RpcResult<Option<Tx>>;
+    #[method(name = "getTransactionByHash")]
+    async fn get_transaction_by_hash(&self, hash: H256) -> RpcResult<Option<Tx>>;
     #[method(name = "getTransactionByBlockHashAndIndex")]
     async fn get_transaction_by_block_hash_and_index(
         &self,

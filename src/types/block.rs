@@ -71,7 +71,7 @@ impl From<H256> for BlockId {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Block {
     /// Number of the block.
