@@ -116,6 +116,27 @@ pub struct Block {
     pub uncles: Vec<H256>,
 }
 
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct Header {
+    pub parent_hash: H256,
+    pub sha3_uncles: H256,
+    pub miner: Address,
+    pub state_root: H256,
+    pub transactions_root: H256,
+    pub receipts_root: H256,
+    pub logs_bloom: Bloom,
+    pub difficulty: U256,
+    pub number: U256,
+    pub gas_limit: U64,
+    pub gas_used: U64,
+    pub timestamp: U64,
+    pub extra_data: Bytes,
+    pub mix_hash: H256,
+    pub nonce: H64,
+    pub base_fee_per_gas: Option<U256>,
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
