@@ -18,7 +18,7 @@ pub struct MessageCall {
     pub data: Option<Bytes>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct Transaction {
     /// A transaction hash.
@@ -49,7 +49,7 @@ pub struct Transaction {
     pub s: H256,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(untagged)]
 /// Tx is either a transaction or a transaction hash.
 pub enum Tx {

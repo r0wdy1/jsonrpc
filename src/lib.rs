@@ -1,12 +1,16 @@
 mod debug;
+mod erigon;
 mod eth;
 mod net;
+mod otterscan;
 mod trace;
 pub mod types;
 
 pub use debug::*;
+pub use erigon::*;
 pub use eth::*;
 pub use net::*;
+pub use otterscan::*;
 pub use trace::*;
 
 mod prelude {

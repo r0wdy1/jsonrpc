@@ -1,6 +1,6 @@
 use crate::prelude::*;
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 /// Transaction's log entry.
 pub struct TransactionLog {

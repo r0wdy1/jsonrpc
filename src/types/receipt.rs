@@ -2,7 +2,7 @@ use crate::types::log::TransactionLog;
 use ethereum_types::{Address, Bloom, H256, U64};
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 /// Transaction receipt.
 pub struct TransactionReceipt {
