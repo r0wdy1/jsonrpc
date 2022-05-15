@@ -9,7 +9,7 @@ ethereum-types = "0.13"
 ethnum = { git = "https://github.com/vorot93/ethnum-rs", branch = "staging", default-features = false, features = [
     "serde",
 ] }
-jsonrpsee = { version = "0.11", features = ["full"] }
+jsonrpsee = { version = "0.13", features = ["full"] }
 serde = { version = "1.0.136", features = ["derive"] }
 serde_json = "1.0.78"
 bytes = "1.1.0"
