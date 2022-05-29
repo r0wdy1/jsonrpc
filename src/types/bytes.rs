@@ -1,55 +1,45 @@
 use crate::prelude::*;
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Eq, Default)]
 /// Wrapper over bytes::Bytes that implements serde::Serialize and serde::Deserialize.
 pub struct Bytes(pub bytes::Bytes);
-
-impl Default for Bytes {
-    fn default() -> Self {
-        Bytes(bytes::Bytes::new())
-    }
-}
-
-impl ToString for Bytes {
-    fn to_string(&self) -> String {
-        format!("0x{}", hex::encode(self.0.as_ref()))
-    }
-}
-
-impl AsRef<[u8]> for Bytes {
-    fn as_ref(&self) -> &[u8] {
-        self.0.as_ref()
-    }
-}
-impl From<&'static [u8]> for Bytes {
-    fn from(bytes: &'static [u8]) -> Self {
-        Bytes(bytes::Bytes::from(bytes))
-    }
-}
-
-impl From<bytes::Bytes> for Bytes {
-    fn from(v: bytes::Bytes) -> Self {
-        Bytes(v)
-    }
-}
 
 impl From<Bytes> for bytes::Bytes {
     fn from(v: Bytes) -> Self {
         v.0
     }
 }
-
-impl From<Vec<u8>> for Bytes {
-    fn from(v: Vec<u8>) -> Self {
-        Bytes(v.into())
+impl ToString for Bytes {
+    fn to_string(&self) -> String {
+        format!("0x{}", hex::encode(self.0.as_ref()))
     }
 }
-
+impl AsRef<[u8]> for Bytes {
+    fn as_ref(&self) -> &[u8] {
+        self.0.as_ref()
+    }
+}
 impl From<U256> for Bytes {
     fn from(v: U256) -> Self {
         Bytes(v.to_be_bytes().to_vec().into())
     }
 }
+
+macro_rules! impl_from {
+    ($type:ty) => {
+        impl From<$type> for Bytes {
+            fn from(v: $type) -> Self {
+                Bytes(v.into())
+            }
+        }
+    };
+}
+impl_from!(Vec<u8>);
+impl_from!(Box<[u8]>);
+impl_from!(&'static [u8]);
+impl_from!(&'static str);
+impl_from!(bytes::Bytes);
+impl_from!(bytes::BytesMut);
 
 impl Serialize for Bytes {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>

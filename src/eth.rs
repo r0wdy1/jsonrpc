@@ -84,4 +84,6 @@ pub trait EthApi {
     async fn get_uncle_count_by_block_hash(&self, block_hash: H256) -> RpcResult<U64>;
     #[method(name = "getUncleCountByBlockNumber")]
     async fn get_uncle_count_by_block_number(&self, block_number: BlockNumber) -> RpcResult<U64>;
+    #[method(name = "sendRawTransaction")]
+    async fn send_raw_transaction(&self, rlp: Bytes) -> RpcResult<H256>;
 }
