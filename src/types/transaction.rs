@@ -1,21 +1,42 @@
 use crate::prelude::*;
 
-#[derive(Serialize, Deserialize, PartialEq, Debug)]
+#[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
-/// MessageCall, used with `eth_call`.
-pub struct MessageCall {
-    /// Sender, defaults to '0x0000000000000000000000000000000000000000'.
-    pub from: Option<Address>,
-    /// Recipient.
-    pub to: Address,
-    /// Gas limit.
-    pub gas: Option<U64>,
-    /// Gas price.
-    pub gas_price: Option<U256>,
-    /// Value to transfer.
-    pub value: Option<U256>,
-    /// Data to send.
-    pub data: Option<Bytes>,
+pub struct AccessListEntry {
+    pub address: Address,
+    pub storage_keys: HashSet<H256>,
+}
+
+#[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
+#[serde(rename_all = "camelCase", untagged)]
+pub enum MessageCall {
+    Legacy {
+        from: Option<Address>,
+        to: Option<Address>,
+        gas: Option<U64>,
+        gas_price: Option<U256>,
+        value: Option<U256>,
+        data: Option<Bytes>,
+    },
+    EIP2930 {
+        from: Option<Address>,
+        to: Option<Address>,
+        gas: Option<U64>,
+        gas_price: Option<U256>,
+        value: Option<U256>,
+        data: Option<Bytes>,
+        access_list: Option<Vec<AccessListEntry>>,
+    },
+    EIP1559 {
+        from: Option<Address>,
+        to: Option<Address>,
+        gas: Option<U64>,
+        max_fee_per_gas: Option<U256>,
+        max_priority_fee_per_gas: Option<U256>,
+        value: Option<U256>,
+        data: Option<Bytes>,
+        access_list: Option<Vec<AccessListEntry>>,
+    },
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
@@ -65,9 +86,9 @@ mod tests {
 
     #[test]
     fn test_ser_de_hexbytes_option() {
-        let call_data = MessageCall {
+        let call_data = MessageCall::Legacy {
             from: None,
-            to: Address::from([0; 20]),
+            to: Some(Address::from([0; 20])),
             gas: None,
             gas_price: None,
             value: None,
@@ -80,9 +101,9 @@ mod tests {
             call_data
         );
 
-        let call_data_with_data = MessageCall {
+        let call_data_with_data = MessageCall::Legacy {
             from: None,
-            to: Address::from([0; 20]),
+            to: Some(Address::from([0; 20])),
             gas: None,
             gas_price: None,
             value: None,

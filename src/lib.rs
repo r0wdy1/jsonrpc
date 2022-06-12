@@ -17,6 +17,7 @@ mod prelude {
     pub use crate::types::*;
     pub use ethereum_types::{Address, Bloom, H256, H64, U64};
     pub use ethnum::U256;
+    pub use std::collections::HashSet;
 
     pub use jsonrpsee::{core::RpcResult, proc_macros::rpc};
     pub use serde::{Deserialize, Deserializer, Serialize, Serializer};

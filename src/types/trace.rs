@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use std::collections::BTreeMap;
 
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub enum TraceType {
     Trace,
@@ -188,9 +188,4 @@ pub struct MemoryDelta {
 pub struct StorageDelta {
     pub key: U256,
     pub val: U256,
-}
-
-pub struct TraceCallParam {
-    pub from: Option<Address>,
-    pub to: Option<Address>,
 }
