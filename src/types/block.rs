@@ -98,8 +98,6 @@ pub struct Block {
     pub difficulty: U256,
     /// Total chain's difficulty at moment of the block inclusion, none if pending.
     pub total_difficulty: Option<U256>,
-    /// Seal fields.
-    pub seal_fields: (H256, H64),
     /// Block's extra data.
     pub extra_data: Bytes,
     /// Block's size.
